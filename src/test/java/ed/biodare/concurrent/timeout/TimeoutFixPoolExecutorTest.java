@@ -8,12 +8,10 @@ package ed.biodare.concurrent.timeout;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 /**
  *
@@ -206,6 +204,7 @@ public class TimeoutFixPoolExecutorTest {
         
     }    
     
+
     
     
 }
