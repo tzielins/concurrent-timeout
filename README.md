@@ -6,6 +6,7 @@ It extends ThreadPoolExecutor so the execution can be done on multiple threads.
 
 ### Usage
 
+        import ed.biodare.concurrent.timeout.TimeoutFixPoolExecutor
         // extecutor = new TimeoutFixPoolExecutor(threads, timeOut, timeUnit);
         TimeoutFixPoolExecutor executor = new TimeoutFixPoolExecutor(4, 1, TimeUnit.SECONDS);        
         
