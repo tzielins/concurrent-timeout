@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * Implementation of a task which monitores future queue awaiting futures that should be timedout. 
@@ -22,8 +21,6 @@ import org.slf4j.LoggerFactory;
  */
 class TimeKeeper implements Runnable {
 
-        final Logger logger = LoggerFactory.getLogger(this.getClass());
-    
         /**
          * If true will print out some status messages
          */
@@ -39,7 +36,7 @@ class TimeKeeper implements Runnable {
          */
         private final BlockingQueue<TimeoutFuture<?>> timedOut;
         /**
-         * Signals runing thread to stop
+         * Signals running thread to stop
          */
         volatile boolean stop;
         
@@ -71,6 +68,10 @@ class TimeKeeper implements Runnable {
             }
         }
         
+        boolean isRunning() {
+            return myThread.isAlive();
+        }
+        
         @Override
         public void run() {
             if (DEBUG) System.out.println(hashCode()+" TimeKeeper starts on "+Thread.currentThread().hashCode());
@@ -90,9 +91,7 @@ class TimeKeeper implements Runnable {
             List<TimeoutFuture<?>> toStop = new ArrayList<>();            
             timedOut.drainTo(toStop);
             
-            if (DEBUG) logger.info(hashCode()+" TimeKeeper will cancel upon shutdown: "+toStop.size());
             for(TimeoutFuture<?> task : toStop) task.timeOut();
-            if (DEBUG) logger.info(hashCode()+" TimeKeeper stopped on "+Thread.currentThread().hashCode());
         }
         
 }

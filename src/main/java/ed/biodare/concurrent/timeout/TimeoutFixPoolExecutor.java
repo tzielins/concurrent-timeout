@@ -169,8 +169,18 @@ public class TimeoutFixPoolExecutor<V> extends ThreadPoolExecutor implements Tim
     protected <T> TimeoutFuture<T> newTaskFor(Callable<T> callable,long timeout,TimeUnit timeUnit) {
         return new TimeoutFutureTask(callable, timedOut, completionQueue,timeout, timeUnit,globalDeadline);
     }
-    
 
+    /*@Override
+    public <T> TimeoutFuture<T> submit(Callable<T> task) {
+        return submit(task, defaultTimeOut, defaultTimeOutUnit);
+    }
+
+    @Override
+    public TimeoutFuture<?> submit(Runnable task) {
+        return submit(task, defaultTimeOut, defaultTimeOutUnit);
+    }*/
+    
+    
     
     @Override
     public <T> TimeoutFuture<T> submit(Callable<T> task,long timeout,TimeUnit timeOutUnit) {

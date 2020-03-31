@@ -57,7 +57,7 @@ class TimeoutFutureTask<T> extends FutureTask<T> implements TimeoutFuture<T> {
     /**
      * Creates new future which will never be timed out
      * @param callable task for this future
-     * @param timedOutQueue delay queue into which this future should be inserted to implement its timeing out
+     * @param timedOutQueue delay queue into which this future should be inserted to implement its timing out
      */
     public TimeoutFutureTask(Callable<T> callable, DelayQueue<TimeoutFuture<?>> timedOutQueue) {
         this(callable,timedOutQueue,Long.MAX_VALUE,TimeUnit.MILLISECONDS);
@@ -117,7 +117,7 @@ class TimeoutFutureTask<T> extends FutureTask<T> implements TimeoutFuture<T> {
      * @param completionQueue if not null, a queue into which this task will be inserted once done (both successfully or cancelled)
      * @param timeout value of timeout (counted from beginning of the future execution
      * @param timeoutUnit unit of the timeout
-     * @param deadline time in miliseconds after which the task should not start execution nor continue its execution
+     * @param deadline system time in miliseconds after which the task should not start execution nor continue its execution
      */
     public TimeoutFutureTask(Callable<T> callable, DelayQueue<TimeoutFuture<?>> timedOutQueue,Queue<TimeoutFuture<?>> completionQueue,long timeout,TimeUnit timeoutUnit,long deadline) {
         super(callable);
@@ -133,15 +133,11 @@ class TimeoutFutureTask<T> extends FutureTask<T> implements TimeoutFuture<T> {
 
     @Override
     public boolean timeOut() {
-        //System.out.println("Req for Timeout: "+this.hashCode()+" "+isTimedOut.get());
         if (isDone() || isTimedOut.get()) {
-            //System.out.println("Ignoring timeout of "+this.hashCode());
             return isTimedOut.get();
         }
     
-        //System.out.println("Timeout: "+this.hashCode());
         isTimedOut.compareAndSet(false, cancel(true));
-        //System.out.println("Timeout: "+this.hashCode()+" "+isTimedOut.get());
         return isTimedOut.get();
     }
     
@@ -155,7 +151,6 @@ class TimeoutFutureTask<T> extends FutureTask<T> implements TimeoutFuture<T> {
         //we only run if have not reached the deadlin
         if (deadline < System.currentTimeMillis()) {
             //we are already too late to do something
-            //System.out.println(hashCode()+" Task not running as it is already after its deadline");
             timeOut();
             return;
         }
@@ -165,9 +160,7 @@ class TimeoutFutureTask<T> extends FutureTask<T> implements TimeoutFuture<T> {
         else waitTill = System.currentTimeMillis()+timeout;
         
         if (waitTill > deadline) waitTill = deadline;
-        
-        //System.out.println(hashCode()+" will wait till: "+waitTill);
-        
+                
         timedOut.put(this);
         super.run();
     }
@@ -175,7 +168,6 @@ class TimeoutFutureTask<T> extends FutureTask<T> implements TimeoutFuture<T> {
     @Override
     protected void done() {
         super.done();
-        //System.out.println(hashCode()+" done");
         timedOut.remove(this);
         if (completionQueue!=null) completionQueue.offer(this);
         

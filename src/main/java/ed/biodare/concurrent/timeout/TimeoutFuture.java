@@ -10,15 +10,18 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.RunnableFuture;
 
 /**
- * Future that represents task that may be timedout.The timedout task is cancelled task with its timedout flag set.Also the implementation may change get methods symantics and throw TimeoutCancellationException if
- get is called on timed out future. 
+ * Future that represents task that may be timed-out.
+ * The timed-out task is cancelled task with its timedout flag set. 
+ * The implementation change the 'get' methods symantics and throw TimeoutCancellationException if
+ get is called after the task has been timed out. 
  * @author Tomasz Zielinski <tomasz.zielinski@ed.ac.uk>
- * @param <V>
+ * @param <V> The result type returned by this Future's {@code get} method
  */
 public interface TimeoutFuture<V> extends RunnableFuture<V>, Delayed {
     
     /**
-     * Checks if the underlying task has been timed out. It can be true only if task has been cancelled due to timeout,
+     * Checks if the underlying task has been timed out. 
+     * It can be true only if task has been cancelled due to timeout,
      * which means that the isDone and isCancelled will also return true.
      * <p>Same like with cancel, there is no guarantee that the thread running this future actually stopped, only that it has been signal to do so.
      * @return true if future has been timed out.
@@ -26,10 +29,11 @@ public interface TimeoutFuture<V> extends RunnableFuture<V>, Delayed {
     public boolean isTimedOut();
     
     /**
-     * Attempts to timeout a future. Future can be timed out only if it is still running or have not started yet, otherwise
+     * Attempts to timeout a future. 
+     * Future can be timed out only if it is still running or have not started yet, otherwise
      * the timeout is ignored.
      * @return true if timing out of the future was successful, similar like with cancel, returning true does not guarantee that that
-     * the thread running the future actually stop executing.
+     * the thread running the future actually stops executing.
      */
     public boolean timeOut();
     
