@@ -19,15 +19,15 @@ public class BusySleeperTest {
     @Test
     public void busyAsAsked() throws Exception {
         
-        int sleep = 10;
+        int sleep = 20;
         BusySleeper instance = new BusySleeper(sleep);
         
         long sT = System.currentTimeMillis();
         instance.call();
         long dur = System.currentTimeMillis()-sT;
         
-        assertTrue(dur > sleep);
-        assertTrue(dur < sleep+10);
+        assertTrue(dur >= sleep);
+        assertTrue(dur <= sleep+10);
         
         sleep = 200;
         instance = new BusySleeper(sleep);
@@ -37,8 +37,8 @@ public class BusySleeperTest {
         dur = System.currentTimeMillis()-sT;
         
         assertTrue(instance.finished);
-        assertTrue(dur > sleep);
-        assertTrue(dur < sleep+10);        
+        assertTrue(dur >= sleep);
+        assertTrue(dur <= sleep+20);        
     }
     
     @Test

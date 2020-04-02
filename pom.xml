@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ed.biodare.concurrent</groupId>
     <artifactId>timeout</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>TimeOut</name>
     <description>TimeOut executor that interrupts submitted tasks after the defined timeout</description>    
@@ -18,7 +18,8 @@
         <connection>scm:git:git@github.com:tzielins/concurrent-timeout.git</connection>
         <url>scm:git:git@github.com:tzielins/concurrent-timeout.git</url>
         <developerConnection>scm:git:git@github.com:tzielins/concurrent-timeout.git</developerConnection>
-    </scm>    
+      <tag>v1.0.0</tag>
+  </scm>    
     
     <dependencies>
     
