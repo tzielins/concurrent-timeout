@@ -130,7 +130,7 @@ public class TimeoutFixPoolExecutorTest {
         
         timeOut = 100;
         instance = new TimeoutFixPoolExecutor(threads, timeOut, timeUnit);
-        instance.setGlobalDeadline(new Date(System.currentTimeMillis()+60));
+        instance.setGlobalDeadline(new Date(System.currentTimeMillis()+70));
         
         List<TimeoutFuture<Integer>> futures = new ArrayList<>();
         futures.add((TimeoutFuture<Integer>)instance.submit(new Sleeper(50,1)));
